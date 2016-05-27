@@ -8,6 +8,7 @@
 
 var events = require('blear.classes.events');
 var object = require('blear.utils.object');
+var array = require('blear.utils.array');
 var time = require('blear.utils.time');
 var event = require('blear.core.event');
 var selector = require('blear.core.selector');
@@ -99,9 +100,17 @@ Switchable.method(_initEvent, function () {
             var contentEl = selector.query(href)[0];
 
             attribute.addClass(parentEl, activeClass);
+            var siblingEls = selector.siblings(parentEl);
+            array.each(siblingEls, function (index, siblingEl) {
+                attribute.removeClass(siblingEl, activeClass);
+            });
 
             if (contentEl) {
+                siblingEls = selector.siblings();
                 attribute.addClass(contentEl, activeClass);
+                array.each(siblingEls, function (index, siblingEl) {
+                    attribute.removeClass(siblingEl, activeClass);
+                });
             }
 
             the.emit('change', index, parentEl, contentEl);

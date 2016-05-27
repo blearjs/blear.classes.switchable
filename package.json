@@ -1,6 +1,6 @@
 {
   "name": "blear.classes.switchable",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "class 可切换的",
   "scripts": {
     "live": "browser-sync start --config bs-config.js",
@@ -39,6 +39,7 @@
   "peerDependencies": {
     "blear.classes.events": "1.x",
     "blear.utils.object": "1.x",
+    "blear.utils.array": "1.x",
     "blear.utils.time": "1.x",
     "blear.core.event": "1.x",
     "blear.core.selector": "1.x",
