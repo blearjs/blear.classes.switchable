@@ -106,7 +106,7 @@ Switchable.method(_initEvent, function () {
             });
 
             if (contentEl) {
-                siblingEls = selector.siblings();
+                siblingEls = selector.siblings(contentEl);
                 attribute.addClass(contentEl, activeClass);
                 array.each(siblingEls, function (index, siblingEl) {
                     attribute.removeClass(siblingEl, activeClass);
