@@ -6,11 +6,11 @@
 
 'use strict';
 
-var events =    require('blear.classes.events');
-var object =    require('blear.utils.object');
-var time =      require('blear.utils.time');
-var event =     require('blear.core.event');
-var selector =  require('blear.core.selector');
+var events = require('blear.classes.events');
+var object = require('blear.utils.object');
+var time = require('blear.utils.time');
+var event = require('blear.core.event');
+var selector = require('blear.core.selector');
 var attribute = require('blear.core.attribute');
 
 
@@ -85,6 +85,8 @@ Switchable.method(_initNode, function () {
  */
 Switchable.method(_initEvent, function () {
     var the = this;
+    var options = the[_options];
+    var activeClass = options.activeClass;
 
     event.on(the[_navEl], the[_options].triggerEvent, 'a', the[_onChange] = function (ev) {
         var el = this;
@@ -94,8 +96,15 @@ Switchable.method(_initEvent, function () {
 
         if (the[_lastIndex] !== index) {
             the[_lastIndex] = index;
+            var contentEl = selector.query(href)[0];
 
-            the.emit('change', index, selector.query(href)[0]);
+            attribute.addClass(parentEl, activeClass);
+
+            if (contentEl) {
+                attribute.addClass(contentEl, activeClass);
+            }
+
+            the.emit('change', index, parentEl, contentEl);
         }
 
         if (reHash.test(href)) {
