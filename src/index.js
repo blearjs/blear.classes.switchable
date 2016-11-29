@@ -60,7 +60,7 @@ var Switchable = events.extend({
         var the = this;
 
         event.un(the[_navEl], the[_options].triggerEvent, the[_onChange]);
-        Switchable.parent.destroy(the);
+        Switchable.invoke('destroy', the);
     }
 });
 var _options = Switchable.sole();
