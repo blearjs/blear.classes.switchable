@@ -69,22 +69,23 @@ var _initEvent = Switchable.sole();
 var _navEl = Switchable.sole();
 var _onChange = Switchable.sole();
 var _lastIndex = Switchable.sole();
+var pro = Switchable.prototype;
 
 
 /**
  * 初始化元素
  */
-Switchable.method(_initNode, function () {
+pro[_initNode] = function () {
     var the = this;
 
     the[_navEl] = selector.query(the[_options].el)[0];
-});
+};
 
 
 /**
  * 初始化事件
  */
-Switchable.method(_initEvent, function () {
+pro[_initEvent] = function () {
     var the = this;
     var options = the[_options];
     var activeClass = options.activeClass;
@@ -120,6 +121,6 @@ Switchable.method(_initEvent, function () {
             ev.preventDefault();
         }
     });
-});
+};
 
 module.exports = Switchable;
