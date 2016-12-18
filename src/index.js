@@ -14,13 +14,12 @@ var event = require('blear.core.event');
 var selector = require('blear.core.selector');
 var attribute = require('blear.core.attribute');
 
-
-var reHash = /^#/;
 var defaults = {
     el: null,
     activeClass: 'active',
     activeIndex: 0,
-    triggerEvent: 'click'
+    triggerEvent: 'click',
+    preventDefault: true
 };
 var Switchable = events.extend({
     className: 'Switchable',
@@ -112,11 +111,12 @@ pro[_initNode] = function () {
 // 初始化事件
 pro[_initEvent] = function () {
     var the = this;
+    var options = the[_options];
 
-    event.on(the[_navEl], the[_options].triggerEvent, 'a', the[_onChange] = function (ev) {
+    event.on(the[_navEl], options.triggerEvent, 'a', the[_onChange] = function (ev) {
         the[_activeAnchor](this);
 
-        if (reHash.test(href)) {
+        if (options.preventDefault) {
             ev.preventDefault();
         }
     });

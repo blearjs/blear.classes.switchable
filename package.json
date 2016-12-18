@@ -1,6 +1,6 @@
 {
   "name": "blear.classes.switchable",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "可切换的类",
   "scripts": {
     "live": "browser-sync start --config bs-config.js",
