@@ -51,8 +51,7 @@ var Switchable = events.extend({
             return the;
         }
 
-        var anchorEl = selector.children(itemEl)[0];
-        event.emit(anchorEl, 'click');
+        the[_activeAnchor](selector.children(itemEl)[0]);
         return the;
     },
 
@@ -67,55 +66,55 @@ var _options = Switchable.sole();
 var _initNode = Switchable.sole();
 var _initEvent = Switchable.sole();
 var _navEl = Switchable.sole();
+var _activeAnchor = Switchable.sole();
 var _onChange = Switchable.sole();
 var _lastIndex = Switchable.sole();
 var pro = Switchable.prototype;
 
+// 激活 anchor
+pro[_activeAnchor] = function (anchorEl) {
+    var the = this;
+    var options = the[_options];
+    var activeClass = options.activeClass;
+    var parentEl = selector.parent(anchorEl)[0];
+    var index = selector.index(parentEl);
+    var href = attribute.attr(anchorEl, 'href');
 
-/**
- * 初始化元素
- */
+    if (the[_lastIndex] !== index) {
+        the[_lastIndex] = index;
+        var contentEl = selector.query(href)[0];
+
+        attribute.addClass(parentEl, activeClass);
+        var siblingEls = selector.siblings(parentEl);
+        array.each(siblingEls, function (index, siblingEl) {
+            attribute.removeClass(siblingEl, activeClass);
+        });
+
+        if (contentEl) {
+            siblingEls = selector.siblings(contentEl);
+            attribute.addClass(contentEl, activeClass);
+            array.each(siblingEls, function (index, siblingEl) {
+                attribute.removeClass(siblingEl, activeClass);
+            });
+        }
+
+        the.emit('change', index, parentEl, contentEl);
+    }
+};
+
+// 初始化元素
 pro[_initNode] = function () {
     var the = this;
 
     the[_navEl] = selector.query(the[_options].el)[0];
 };
 
-
-/**
- * 初始化事件
- */
+// 初始化事件
 pro[_initEvent] = function () {
     var the = this;
-    var options = the[_options];
-    var activeClass = options.activeClass;
 
     event.on(the[_navEl], the[_options].triggerEvent, 'a', the[_onChange] = function (ev) {
-        var el = this;
-        var parentEl = selector.parent(el)[0];
-        var index = selector.index(parentEl);
-        var href = attribute.attr(el, 'href');
-
-        if (the[_lastIndex] !== index) {
-            the[_lastIndex] = index;
-            var contentEl = selector.query(href)[0];
-
-            attribute.addClass(parentEl, activeClass);
-            var siblingEls = selector.siblings(parentEl);
-            array.each(siblingEls, function (index, siblingEl) {
-                attribute.removeClass(siblingEl, activeClass);
-            });
-
-            if (contentEl) {
-                siblingEls = selector.siblings(contentEl);
-                attribute.addClass(contentEl, activeClass);
-                array.each(siblingEls, function (index, siblingEl) {
-                    attribute.removeClass(siblingEl, activeClass);
-                });
-            }
-
-            the.emit('change', index, parentEl, contentEl);
-        }
+        the[_activeAnchor](this);
 
         if (reHash.test(href)) {
             ev.preventDefault();
