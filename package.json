@@ -1,6 +1,6 @@
 {
   "name": "blear.classes.switchable",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "可切换的类",
   "scripts": {
     "live": "browser-sync start --config bs-config.js",
@@ -35,8 +35,7 @@
   "bugs": {
     "url": "https://github.com/blearjs/blear.classes.switchable/issues"
   },
-  "dependencies": {},
-  "peerDependencies": {
+  "dependencies": {
     "blear.classes.events": "1.x",
     "blear.utils.object": "1.x",
     "blear.utils.array": "1.x",
@@ -45,6 +44,7 @@
     "blear.core.selector": "1.x",
     "blear.core.attribute": "1.x"
   },
+  "peerDependencies": {},
   "devDependencies": {
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.22",
