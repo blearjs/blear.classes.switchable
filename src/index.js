@@ -36,7 +36,6 @@ var Switchable = events.extend({
         });
     },
 
-
     /**
      * 改变索引值
      * @param index {Number} 索引值
@@ -54,6 +53,17 @@ var Switchable = events.extend({
         return the;
     },
 
+    /**
+     * 获取索引值
+     * @returns {*}
+     */
+    getIndex: function () {
+        return this[_lastIndex];
+    },
+
+    /**
+     * 销毁实例
+     */
     destroy: function () {
         var the = this;
 
@@ -61,13 +71,14 @@ var Switchable = events.extend({
         Switchable.invoke('destroy', the);
     }
 });
-var _options = Switchable.sole();
-var _initNode = Switchable.sole();
-var _initEvent = Switchable.sole();
-var _navEl = Switchable.sole();
-var _activeAnchor = Switchable.sole();
-var _onChange = Switchable.sole();
-var _lastIndex = Switchable.sole();
+var sole = Switchable.sole;
+var _options = sole();
+var _initNode = sole();
+var _initEvent = sole();
+var _navEl = sole();
+var _activeAnchor = sole();
+var _onChange = sole();
+var _lastIndex = sole();
 var pro = Switchable.prototype;
 
 // 激活 anchor
