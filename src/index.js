@@ -58,7 +58,9 @@ var Switchable = events.extend({
      * @returns {*}
      */
     getIndex: function () {
-        return this[_lastIndex];
+        var the = this;
+
+        return the[_lastIndex] || the[_options].activeIndex;
     },
 
     /**
