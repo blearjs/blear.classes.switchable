@@ -18,9 +18,46 @@
     <meta name="description" content="描述语句">
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
     <title>index.html</title>
+    <style>
+        ul a {
+            color: #000;
+        }
+
+        ul .active,
+        ul .active a {
+            color: #f00;
+        }
+
+        .content div {
+            display: none;
+        }
+
+        .content .active {
+            display: block;
+        }
+    </style>
 </head>
 <body ontouchstart="">
 
+<ul id="nav0">
+    <li><a href="#tab01">#tab01</a></li>
+    <li><a href="#tab02">#tab02</a></li>
+    <li><a href="#tab03">#tab03</a></li>
+</ul>
+
+<div class="content">
+    <div id="tab01">#tab01</div>
+    <div id="tab02">#tab02</div>
+    <div id="tab03">#tab03</div>
+</div>
+
+<ul id="nav1">
+    <li>#tab11</li>
+    <li>#tab12</li>
+    <li>#tab13</li>
+</ul>
+
+<script src="/node_modules/coolie.js/coolie.js" data-config="/example/coolie-config.js" data-main="index.js"></script>
 
 </body>
 </html>

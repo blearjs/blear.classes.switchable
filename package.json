@@ -46,6 +46,7 @@
   },
   "peerDependencies": {},
   "devDependencies": {
+    "coolie.js": "^2.2.1",
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.22",
     "karma-chrome-launcher": "^1.0.1",

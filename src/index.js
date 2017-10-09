@@ -19,7 +19,9 @@ var defaults = {
     activeClass: 'active',
     activeIndex: 0,
     triggerEvent: 'click',
-    preventDefault: true
+    preventDefault: true,
+    anchorSel: 'a',
+    itemSel: 'li'
 };
 var Switchable = events.extend({
     className: 'Switchable',
@@ -49,7 +51,7 @@ var Switchable = events.extend({
             return the;
         }
 
-        the[_activeAnchor](selector.children(itemEl)[0]);
+        the[_activeItem](itemEl);
         return the;
     },
 
@@ -78,36 +80,42 @@ var _options = sole();
 var _initNode = sole();
 var _initEvent = sole();
 var _navEl = sole();
-var _activeAnchor = sole();
+var _activeItem = sole();
 var _onChange = sole();
 var _lastIndex = sole();
 var pro = Switchable.prototype;
 
 // 激活 anchor
-pro[_activeAnchor] = function (anchorEl) {
+pro[_activeItem] = function (parentEl) {
     var the = this;
     var options = the[_options];
     var activeClass = options.activeClass;
-    var parentEl = selector.parent(anchorEl)[0];
     var index = selector.index(parentEl);
-    var href = attribute.attr(anchorEl, 'href');
+    var anchorEl = selector.children(parentEl)[0];
+    var href = '';
+
+    if (anchorEl) {
+        href = attribute.attr(anchorEl, 'href');
+    }
 
     if (the[_lastIndex] !== index) {
         the[_lastIndex] = index;
-        var contentEl = selector.query(href)[0];
-
         attribute.addClass(parentEl, activeClass);
         var siblingEls = selector.siblings(parentEl);
         array.each(siblingEls, function (index, siblingEl) {
             attribute.removeClass(siblingEl, activeClass);
         });
 
-        if (contentEl) {
-            siblingEls = selector.siblings(contentEl);
-            attribute.addClass(contentEl, activeClass);
-            array.each(siblingEls, function (index, siblingEl) {
-                attribute.removeClass(siblingEl, activeClass);
-            });
+        if (href) {
+            var contentEl = selector.query(href)[0];
+
+            if (contentEl) {
+                siblingEls = selector.siblings(contentEl);
+                attribute.addClass(contentEl, activeClass);
+                array.each(siblingEls, function (index, siblingEl) {
+                    attribute.removeClass(siblingEl, activeClass);
+                });
+            }
         }
 
         the.emit('change', index, parentEl, contentEl);
@@ -126,8 +134,8 @@ pro[_initEvent] = function () {
     var the = this;
     var options = the[_options];
 
-    event.on(the[_navEl], options.triggerEvent, 'a', the[_onChange] = function (ev) {
-        the[_activeAnchor](this);
+    event.on(the[_navEl], options.triggerEvent, options.anchorSel, the[_onChange] = function (ev) {
+        the[_activeItem](selector.closest(this, options.itemSel)[0]);
 
         if (options.preventDefault) {
             ev.preventDefault();
