@@ -34,7 +34,10 @@ var Switchable = events.extend({
         the[_initEvent]();
 
         time.nextTick(function () {
-            the.change(the[_options].activeIndex);
+            var activeIndex = the[_options].activeIndex;
+            if (activeIndex > -1) {
+                the.change(activeIndex);
+            }
         });
     },
 
