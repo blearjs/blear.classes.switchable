@@ -51,7 +51,7 @@ var Switchable = events.extend({
             return the;
         }
 
-        the[_activeItem](itemEl);
+        the[_activeItem](itemEl, false);
         return the;
     },
 
@@ -86,12 +86,12 @@ var _lastIndex = sole();
 var pro = Switchable.prototype;
 
 // 激活 anchor
-pro[_activeItem] = function (parentEl) {
+pro[_activeItem] = function (itemEl, emit) {
     var the = this;
     var options = the[_options];
     var activeClass = options.activeClass;
-    var index = selector.index(parentEl);
-    var anchorEl = selector.children(parentEl)[0];
+    var index = selector.index(itemEl);
+    var anchorEl = selector.children(itemEl)[0];
     var href = '';
 
     if (anchorEl) {
@@ -100,8 +100,8 @@ pro[_activeItem] = function (parentEl) {
 
     if (the[_lastIndex] !== index) {
         the[_lastIndex] = index;
-        attribute.addClass(parentEl, activeClass);
-        var siblingEls = selector.siblings(parentEl);
+        attribute.addClass(itemEl, activeClass);
+        var siblingEls = selector.siblings(itemEl);
         array.each(siblingEls, function (index, siblingEl) {
             attribute.removeClass(siblingEl, activeClass);
         });
@@ -118,7 +118,9 @@ pro[_activeItem] = function (parentEl) {
             }
         }
 
-        the.emit('change', index, parentEl, contentEl);
+        if (emit) {
+            the.emit('change', index, itemEl, contentEl);
+        }
     }
 };
 
@@ -135,7 +137,7 @@ pro[_initEvent] = function () {
     var options = the[_options];
 
     event.on(the[_navEl], options.triggerEvent, options.anchorSel, the[_onChange] = function (ev) {
-        the[_activeItem](selector.closest(this, options.itemSel)[0]);
+        the[_activeItem](selector.closest(this, options.itemSel)[0], true);
 
         if (options.preventDefault) {
             ev.preventDefault();
