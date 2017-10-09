@@ -2,11 +2,7 @@
   "name": "blear.classes.switchable",
   "version": "1.0.12",
   "description": "可切换的类",
-  "scripts": {
-    "live": "browser-sync start --config bs-config.js",
-    "test": "node ./node_modules/.bin/karma start karma.conf.js --single-run",
-    "prepublish2": "npm test"
-  },
+  "scripts": {},
   "preferGlobal": false,
   "bin": {},
   "engines": {
