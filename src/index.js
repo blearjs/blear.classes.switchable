@@ -54,7 +54,7 @@ var Switchable = events.extend({
             return the;
         }
 
-        the[_activeItem](itemEl, false);
+        the[_activeItem](itemEl);
         return the;
     },
 
@@ -89,7 +89,12 @@ var _lastIndex = sole();
 var pro = Switchable.prototype;
 
 // 激活 anchor
-pro[_activeItem] = function (itemEl, emit) {
+// 这里的一个改动，是去除了 emit 参数
+// 这个地方改动的频率有点大，这次去掉的原因是：
+// 不管主动 change 还是事件触发 change，还是第一次初始化 change，
+// 都应该触发 change 事件
+// 2019年07月12日11:29:14
+pro[_activeItem] = function (itemEl) {
     var the = this;
     var options = the[_options];
     var activeClass = options.activeClass;
@@ -121,9 +126,7 @@ pro[_activeItem] = function (itemEl, emit) {
             }
         }
 
-        if (emit) {
-            the.emit('change', index, itemEl, contentEl);
-        }
+        the.emit('change', index, itemEl, contentEl);
     }
 };
 
@@ -140,7 +143,7 @@ pro[_initEvent] = function () {
     var options = the[_options];
 
     event.on(the[_navEl], options.triggerEvent, options.anchorSel, the[_onChange] = function (ev) {
-        the[_activeItem](selector.closest(this, options.itemSel)[0], true);
+        the[_activeItem](selector.closest(this, options.itemSel)[0]);
 
         if (options.preventDefault) {
             ev.preventDefault();
