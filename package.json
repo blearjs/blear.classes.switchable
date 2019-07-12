@@ -1,6 +1,6 @@
 {
   "name": "blear.classes.switchable",
-  "version": "1.0.12",
+  "version": "1.1.0",
   "description": "可切换的类",
   "scripts": {},
   "preferGlobal": false,
@@ -14,6 +14,7 @@
     "blear",
     "classes",
     "switchable",
+    "tab",
     "cloudcome",
     "ydr.me"
   ],
